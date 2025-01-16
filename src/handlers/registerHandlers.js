@@ -7,7 +7,9 @@ export const handleSendVerificationCode = async (email, setIsEmailDisabled, setT
         if (responseMessage === "인증번호가 이메일로 전송되었습니다") {
             setIsEmailDisabled(true); // 이메일 입력 비활성화
             setTimer(300); // 5분 타이머 시작
-        } 
+        } else {
+            console.warn("Unexpected response message:", responseMessage);
+        }
     } catch (err) {
         console.error("인증 코드 전송 실패:", err.message);
         alert(err.message || "인증 코드 전송에 실패했습니다.");
@@ -15,14 +17,16 @@ export const handleSendVerificationCode = async (email, setIsEmailDisabled, setT
 };
 
 // 인증번호 검증 핸들러
-export const handleVerifyCode = async (email, code, verifyCode, setIsCodeDisabled, setIsVerified, setTimer) => {
+export const handleVerifyCode = async (email, code, verifyCode, setIsCodeDisabled, setIsVerified, setTimer, setIsEmailDisabled) => {
     try {
         const message = await verifyCode(email, code); // 인증번호 검증
-        if (message === "인증에 성공하였습니다.") {
-            alert("인증이 완료되었습니다!");
+        if (message === "인증 성공") {
             setIsCodeDisabled(true); // 인증번호 입력 필드 비활성화
             setIsVerified(true); // 인증 완료 상태로 변경
             setTimer(0); // 타이머 중지
+            setIsEmailDisabled(true); // 이메일 입력 필드 비활성화
+        } else {
+            console.warn("Unexpected response message:", message);
         }
     } catch (err) {
         console.error("인증 실패:", err.message);
@@ -55,7 +59,6 @@ export const handleSubmitForm = async (e, formData, password, confirmPassword, r
 
     try {
         await register(formData); // 회원가입 요청
-        alert("회원가입이 완료되었습니다.");
         navigate("/", { replace: true }); // 홈 화면으로 이동
     } catch (err) {
         console.error("회원가입 실패:", err.message);

@@ -14,17 +14,14 @@ export const useRegister = () => {
 
   // 닉네임 중복 확인
   const checkNickname = async (nickname) => {
-    setLoading(true);
     setNickMessage(null);
     setError(null);
     try {
       const message = await checkNicknameDuplicate(nickname); // 서버 요청
       setNickMessage(message); // 성공 메시지 저장
-      alert(message); // 성공 메시지를 alert로 표시
     } catch (err) {
       const errorMessage = err.response?.data?.detail || err.message || "닉네임 확인 중 문제가 발생했습니다.";
       setError(errorMessage); // 에러 메시지 저장
-      alert(errorMessage); // 에러 메시지를 alert로 표시
     } finally {
       setLoading(false);
     }

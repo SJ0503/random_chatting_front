@@ -39,10 +39,10 @@ function Register() {
                 setTimer((prev) => prev - 1);
             }, 1000);
             return () => clearInterval(countdown);
-        } else {
-            setIsEmailDisabled(false); // 타이머가 0일 때 이메일 입력 활성화
+        } else if (!isVerified) {
+            setIsEmailDisabled(false); // 타이머가 0일 때만 이메일 입력 활성화
         }
-    }, [timer]);
+    }, [timer, isVerified]);
 
     const formData = {
         user_email: email,
@@ -68,19 +68,20 @@ function Register() {
                                 placeholder="이메일"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                disabled={isEmailDisabled}
-                                className={`${isEmailDisabled ? "cursor-not-allowed bg-gray-200" : ""}`}
+                                disabled={isEmailDisabled || isVerified} // 인증 완료 시 비활성화
+                                className={`${isEmailDisabled || isVerified ? "cursor-not-allowed bg-gray-200" : ""}`}
                             />
                         </div>
 
-                        {timer > 0 ? (
+                        {timer > 0 && !isVerified ? ( // 인증 완료 전 타이머 표시
                             <div className="w-full h-12 flex items-center justify-center bg-gray-300 text-gray-700 px-4 py-2 rounded">
                                 {Math.floor(timer / 60)}분 {timer % 60}초
                             </div>
                         ) : (
                             <button
                                 type="button"
-                                className="w-full h-12 bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+                                className={`w-full h-12 px-4 py-2 rounded ${isVerified ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-black text-white hover:bg-gray-800"
+                                    }`}
                                 onClick={async () =>
                                     await handleSendVerificationCode(
                                         email,
@@ -89,8 +90,9 @@ function Register() {
                                         sendVerificationCode
                                     )
                                 }
+                                disabled={isVerified} // 인증 완료 시 버튼 비활성화
                             >
-                                인증번호 전송
+                                {isVerified ? "인증완료" : "인증번호 전송"}
                             </button>
                         )}
                     </div>
@@ -104,22 +106,25 @@ function Register() {
                                 placeholder="인증번호"
                                 value={code}
                                 onChange={(e) => setCode(e.target.value)}
-                                disabled={isCodeDisabled} // 인증 완료 시 비활성화
+                                disabled={isCodeDisabled || isVerified} // 인증 완료 시 비활성화
+                            // className={`${isVerified ? "cursor-not-allowed bg-gray-200" : ""}`}
                             />
                         </div>
                         <button
                             type="button"
-                            className={`w-full h-12 px-4 py-2 rounded ${isCodeDisabled ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-black text-white hover:bg-gray-800"}`}
+                            className={`w-full h-12 px-4 py-2 rounded ${isCodeDisabled || isVerified ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-black text-white hover:bg-gray-800"}`}
                             onClick={async () =>
                                 await handleVerifyCode(
                                     email,
                                     code,
                                     verifyCode,
                                     setIsCodeDisabled,
-                                    setIsVerified
+                                    setIsVerified,
+                                    setTimer,
+                                    setIsEmailDisabled
                                 )
                             }
-                            disabled={isCodeDisabled} // 인증 완료 시 버튼 비활성화
+                            disabled={isCodeDisabled || isVerified} // 인증 완료 시 버튼 비활성화
                         >
                             {isVerified ? "인증완료" : "확인"}
                         </button>
@@ -161,8 +166,8 @@ function Register() {
                             {error
                                 ? error
                                 : nickMessage
-                                ? nickMessage
-                                : "닉네임 중복확인을 진행해주세요."}
+                                    ? nickMessage
+                                    : "닉네임 중복확인을 진행해주세요."}
                         </small>
                     </div>
 
