@@ -49,6 +49,12 @@ function Register() {
         );
     }, [isVerified, password, confirmPassword, nickMessage, age, gender, region]);
 
+        // 닉네임 변경 시 자동으로 가입 버튼 비활성화
+        useEffect(() => {
+            setIsFormValid(false);
+        }, [nickname]);
+    
+
     useEffect(() => {
         if (timer > 0) {
             const countdown = setInterval(() => {
