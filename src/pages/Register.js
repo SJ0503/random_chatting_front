@@ -4,12 +4,8 @@ import SelectField from "../components/Fields/SelectField";
 import PasswordFields from "../components/Fields/PasswordField";
 import { useRegister } from "../hooks/useRegister";
 import { useNavigate } from "react-router-dom";
-import {
-    handleSendVerificationCode,
-    handleVerifyCode,
-    handleCheckNickname,
-    handleSubmitForm,
-} from "../handlers/registerHandlers";
+import { handleSendVerificationCode, handleVerifyCode, handleCheckNickname, handleSubmitForm, } from "../handlers/registerHandlers";
+import { validatePassword } from "../helpers/validation";
 
 const cities = [
     "서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종",
@@ -29,9 +25,29 @@ function Register() {
     const [code, setCode] = useState(""); // 인증 코드 상태
     const [isCodeDisabled, setIsCodeDisabled] = useState(false); // 인증번호 입력 필드 비활성화
     const [isVerified, setIsVerified] = useState(false); // 인증 완료 상태
-
     const { checkNickname, register, sendVerificationCode, verifyCode, loading, error, nickMessage } = useRegister();
     const navigate = useNavigate();
+    const [isFormValid, setIsFormValid] = useState(false);  // 모든 유효성 검사
+
+    useEffect(() => {
+        const isPasswordValid = validatePassword(password).isValid;
+        const isPasswordMatch = password === confirmPassword;
+        const isNicknameValid = !!nickMessage; // 닉네임 중복 확인 완료
+        const isAgeValid = !!age;
+        const isGenderValid = !!gender;
+        const isRegionValid = !!region;
+
+        // 모든 조건이 충족되면 true, 아니면 false
+        setIsFormValid(
+            isVerified &&
+            isPasswordValid &&
+            isPasswordMatch &&
+            isNicknameValid &&
+            isAgeValid &&
+            isGenderValid &&
+            isRegionValid
+        );
+    }, [isVerified, password, confirmPassword, nickMessage, age, gender, region]);
 
     useEffect(() => {
         if (timer > 0) {
@@ -201,10 +217,17 @@ function Register() {
                     </div>
 
                     {/* 가입하기 버튼 */}
+                    <small className="block mt-2 mb-4 text-sm text-center text-gray-500">
+                        모든 조건이 충족되어야 가입버튼이 활성화 됩니다.
+                    </small>
+
                     <button
                         type="submit"
-                        className={`w-full bg-black text-white p-3 rounded hover:bg-gray-800 ${loading ? "bg-gray-400 cursor-not-allowed" : ""}`}
-                        disabled={loading}
+                        className={`w-full p-3 rounded ${isFormValid && !loading
+                                ? "bg-black text-white hover:bg-gray-800"
+                                : "bg-gray-300 text-gray-700 cursor-not-allowed"
+                            }`}
+                        disabled={!isFormValid || loading}
                     >
                         {loading ? "가입 중..." : "가입하기"}
                     </button>

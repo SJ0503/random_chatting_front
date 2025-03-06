@@ -1,4 +1,5 @@
 // helpers/validation.js
+// 비밀번호 유효성 검사 함수
 export const validatePassword = (password) => {
     const isValid = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*]).{8,15}$/.test(password);
     return {
