@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import KakaoLoginButton from "../components/KakaoButton";
 
 function Login() {
   return (
@@ -36,12 +37,7 @@ function Login() {
           </button>
 
           {/* 카카오 로그인 버튼 */}
-          <button
-            type="button"
-            className="w-full bg-yellow-400 text-black p-3 rounded hover:bg-yellow-500"
-          >
-            카카오로 시작
-          </button>
+          <KakaoLoginButton/>
         </form>
         <div className="flex justify-center space-x-6 mt-8 text-sm text-gray-400">
           <Link to="/findMyID">

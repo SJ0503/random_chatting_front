@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import FindMyID from "./pages/FindMyID"
 import FindMyPW from "./pages/FindMyPW"
+import KaKaoRegister from "./pages/KakaoRegister";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
+                    <Route path="/kakaoRegister" element={<KaKaoRegister />} />
                     <Route path="/findMyID" element={<FindMyID />} />
                     <Route path="/findMyPW" element={<FindMyPW />} />
                 </Routes>
