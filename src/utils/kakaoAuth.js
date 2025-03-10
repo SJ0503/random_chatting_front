@@ -2,7 +2,7 @@ import axios from "axios";
 
 const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize`;
 const KAKAO_CLIENT_ID = "f4ac91129b989e86dad1ccadf49f955d"; // 카카오 개발자 콘솔에서 발급받은 키
-const REDIRECT_URI = "http://localhost:3000/kakao-callback"; // 리디렉트 URI
+const REDIRECT_URI = "http://localhost:3000/kakaoRegister"; // 리디렉트 URI
 const API_BASE_URL = "http://127.0.0.1:8000"; // 백엔드 API 주소
 
 // ✅ Axios 기본 설정 (카카오 API 요청용)
@@ -25,7 +25,7 @@ const backendApi = axios.create({
 export const loginWithKakao = () => {
     window.location.href = `${KAKAO_AUTH_URL}?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 };
-console.log("카카오아이디",KAKAO_CLIENT_ID);
+console.log("카카오아이디", KAKAO_CLIENT_ID);
 
 // ✅ 백엔드에 인가 코드 전달 → 액세스 토큰 요청
 export const fetchKakaoToken = async (authCode) => {

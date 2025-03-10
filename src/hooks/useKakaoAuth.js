@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { fetchKakaoToken } from "../utils/kakaoAuth";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,7 @@ export const useKakaoAuth = () => {
             if (data.isNewUser) {
                 navigate("/kakaoRegister", { state: { kakaoId: data.kakaoId } });  // 새 유저면 회원가입 폼으로 이동
             } else {
-                navigate("/");  // 기존 회원이면 홈으로 이동
+                navigate("/");  // 기존 회원이면 홈으로 이동동
             }
         } catch (err) {
             console.error("카카오 로그인 실패:", err);
