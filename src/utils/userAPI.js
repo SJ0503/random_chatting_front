@@ -64,3 +64,15 @@ export const registerUser = async (userData) => {
     throw new Error(error.response?.data?.detail || "회원 가입 중 문제가 발생했습니다.");
   }
 };
+
+// ✅ 백엔드로 카카오 회원가입 요청 (DB 저장)
+export const registerKakaoUser = async (userData) => {
+  console.log(userData)
+    try {
+        const response = await api.post(`/kakao/register`, userData);
+        return response.data; // 가입된 사용자 정보 반환
+    } catch (error) {
+        console.error("카카오 회원가입 실패:", error.response?.data || error.message);
+        throw new Error(error.response?.data?.detail || "카카오 회원가입 중 문제가 발생했습니다.");
+    }
+};

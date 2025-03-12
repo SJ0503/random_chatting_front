@@ -1,3 +1,4 @@
+
 // 인증번호 전송 핸들러
 export const handleSendVerificationCode = async (email, setIsEmailDisabled, setTimer, sendVerificationCode) => {
     try {
@@ -45,7 +46,7 @@ export const handleCheckNickname = async (nickname, checkNickname) => {
     }
 };
 
-// 폼 제출 핸들러
+// 이메일 회원가입 폼 제출 핸들러
 export const handleSubmitForm = async (e, formData, password, confirmPassword, register, navigate) => {
     e.preventDefault();
 
@@ -63,5 +64,18 @@ export const handleSubmitForm = async (e, formData, password, confirmPassword, r
     } catch (err) {
         console.error("회원가입 실패:", err.message);
         alert(err.message || "회원가입 중 문제가 발생했습니다.");
+    }
+};
+
+// 카카오 회원가입 폼 제출 핸들러
+export const handleKakaoSubmitForm = async (e, formData, register, navigate) => {
+    e.preventDefault();
+
+    try {
+        await register(formData); // 카카오 회원가입 요청
+        navigate("/", { replace: true });
+    } catch (err) {
+        console.error("카카오 회원가입 실패:", err.message);
+        alert(err.message || "카카오 회원가입 중 문제가 발생했습니다.");
     }
 };

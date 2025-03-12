@@ -1,43 +1,34 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchKakaoToken } from "../utils/kakaoAuth"; // 토큰 요청 API
+import axios from "axios";
+
+const API_BASE_URL = "http://127.0.0.1:8000"; // FastAPI 백엔드 주소
 
 function KakaoCallback() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const authCode = urlParams.get("code"); // 카카오에서 받은 인가 코드
+        const params = new URLSearchParams(window.location.search);
+        const authCode = params.get("code");  // ✅ 카카오에서 받은 인가 코드
 
         if (authCode) {
-            handleKakaoLogin(authCode);
-        } else {
-            alert("카카오 로그인 실패!");
-            navigate("/login"); // 로그인 페이지로 리디렉트
+            axios.post(`${API_BASE_URL}/kakao/token`, { code: authCode })  // ✅ 백엔드로 인가 코드 전송
+                .then((res) => {
+                    // console.log("카카오 로그인 응답:", res.data);
+
+                    if (res.data.isNewUser) {
+                        // ✅ 신규 회원 → 회원가입 페이지로 이동
+                        navigate("/kakaoRegister", { state: { kakaoId: res.data.kakao_id } });
+                    } else {
+                        // ✅ 기존 회원 → 로그인 완료 후 홈 이동
+                        navigate("/");
+                    }
+                })
+                .catch((err) => {
+                    console.error("카카오 로그인 실패:", err);
+                });
         }
-    }, []);
-
-    const handleKakaoLogin = async (authCode) => {
-        try {
-            const response = await fetchKakaoToken(authCode); // 백엔드로 authCode 보내기
-            const { userExists, accessToken } = response;
-
-            if (userExists) {
-                alert("로그인 성공!");
-                // ✅ 로그인 상태 저장 (예: localStorage 또는 context 사용)
-                localStorage.setItem("accessToken", accessToken);
-                navigate("/home"); // 로그인 후 홈으로 이동
-            } else {
-                alert("회원가입 필요");
-                navigate("/kakao/register"); // 카카오 회원가입 페이지로 이동
-            }
-        } catch (error) {
-            alert("카카오 로그인 처리 중 오류 발생!");
-            navigate("/login");
-        }
-    };
-
-    return <div>카카오 로그인 처리 중...</div>;
+    }, [navigate]); // ✅ navigate 추가
 }
 
 export default KakaoCallback;
