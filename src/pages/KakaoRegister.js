@@ -45,7 +45,11 @@ function KaKaoRegister() {
     return (
         <div className="flex justify-center items-center min-h-screen bg-white">
             <div className="w-full max-w-lg p-8">
-                <h2 className="text-2xl font-bold my-10 text-center">MyChat 회원가입</h2>
+                <h2 className="text-2xl font-bold my-10 text-center">MyChat 카카오 회원가입</h2>
+
+                <small className="block mb-4 text-sm text-center text-gray-500">
+                        추가정보를 입력해주세요
+                    </small>
 
                 <form onSubmit={(e) => handleKakaoSubmitForm(e, formData, register, navigate)}>
 
