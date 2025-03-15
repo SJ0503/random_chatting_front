@@ -9,18 +9,16 @@ function KakaoCallback() {
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-        const authCode = params.get("code");  // ✅ 카카오에서 받은 인가 코드
+        const authCode = params.get("code"); 
 
         if (authCode) {
-            axios.post(`${API_BASE_URL}/kakao/token`, { code: authCode })  // ✅ 백엔드로 인가 코드 전송
+            axios.post(`${API_BASE_URL}/login`, { login_type: "kakao", code: authCode })
                 .then((res) => {
-                    // console.log("카카오 로그인 응답:", res.data);
-
+                    console.log("카카오 로그인 응답:", res.data);
                     if (res.data.isNewUser) {
-                        // ✅ 신규 회원 → 회원가입 페이지로 이동
                         navigate("/kakaoRegister", { state: { kakaoId: res.data.kakao_id } });
                     } else {
-                        // ✅ 기존 회원 → 로그인 완료 후 홈 이동
+                        localStorage.setItem("accessToken", res.data.accessToken);
                         navigate("/");
                     }
                 })
@@ -28,7 +26,9 @@ function KakaoCallback() {
                     console.error("카카오 로그인 실패:", err);
                 });
         }
-    }, [navigate]); // ✅ navigate 추가
+    }, [navigate]);
+
+    return null;
 }
 
 export default KakaoCallback;
