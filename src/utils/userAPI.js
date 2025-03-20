@@ -76,3 +76,26 @@ export const registerKakaoUser = async (userData) => {
         throw new Error(error.response?.data?.detail || "카카오 회원가입 중 문제가 발생했습니다.");
     }
 };
+
+// ✅ 이메일 로그인 요청
+export const loginWithEmail = async (email, password) => {
+  console.log("이메일로그인요청")
+  try {
+    const response = await api.post(`/login`, {
+      login_type: "email",
+      email,
+      password,
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("이메일 로그인 실패:", error.response?.data || error.message);
+    throw new Error(error.response?.data?.detail || "이메일 로그인 중 문제가 발생했습니다.");
+  }
+};
+
+// ✅ 로그아웃 (토큰 삭제)
+export const logout = () => {
+  localStorage.removeItem("accessToken");
+  document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+};

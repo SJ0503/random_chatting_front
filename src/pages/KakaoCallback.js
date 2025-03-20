@@ -10,7 +10,7 @@ function KakaoCallback() {
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const authCode = params.get("code"); 
-
+        console.log(authCode)
         if (authCode) {
             axios.post(`${API_BASE_URL}/login`, { login_type: "kakao", code: authCode })
                 .then((res) => {
