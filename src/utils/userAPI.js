@@ -86,7 +86,6 @@ export const loginWithEmail = async (email, password) => {
       email,
       password,
     });
-
     return response.data;
   } catch (error) {
     console.error("이메일 로그인 실패:", error.response?.data || error.message);
