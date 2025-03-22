@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { logout } from "../utils/userAPI.js"
 
 // ✅ AuthContext 생성
 const AuthContext = createContext();
@@ -21,7 +22,13 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     // ✅ 로그아웃 함수
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        try {
+            await logout(); // ✅ 실제로 함수 실행
+        } catch (err) {
+            console.error("서버 로그아웃 실패:", err);
+        }
+
         localStorage.removeItem("user");
         localStorage.removeItem("accessToken");
         setUser(null);

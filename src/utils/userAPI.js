@@ -1,16 +1,7 @@
-import axios from "axios";
 import { isValidEmail } from "../helpers/validation"; // 이메일 유효성 검사 함수 
+import api from "./api.js"
 
-const API_BASE_URL = "http://127.0.0.1:8000"; // FastAPI 서버 주소
 
-// Axios 기본 설정
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-  },
-});
 
 // ✅ 이메일 인증번호 전송
 export const sendEmailVerificationCode = async (email) => {
@@ -79,13 +70,13 @@ export const registerKakaoUser = async (userData) => {
 
 // ✅ 이메일 로그인 요청
 export const loginWithEmail = async (email, password) => {
-  console.log("이메일로그인요청")
   try {
     const response = await api.post(`/login`, {
       login_type: "email",
       email,
       password,
     });
+
     return response.data;
   } catch (error) {
     console.error("이메일 로그인 실패:", error.response?.data || error.message);
@@ -93,8 +84,28 @@ export const loginWithEmail = async (email, password) => {
   }
 };
 
+// ✅ 카카오 로그인 요청 (인가 코드 전달 → 토큰 & 유저 정보 받기)
+export const loginWithKakao = async (authCode) => {
+  const response = await api.post(`/login`, {
+    login_type: "kakao",
+    code: authCode,
+  });
+
+  return response.data;
+};
+
 // ✅ 로그아웃 (토큰 삭제)
-export const logout = () => {
+export const logout = async () => {
+  try {
+    await api.post("/logout");
+  console.log("로그아웃성공")
+    
+  } catch (e) {
+    console.warn("서버 로그아웃 실패:", e.message);
+  }
+
   localStorage.removeItem("accessToken");
+  localStorage.removeItem("user");
   document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 };
+
