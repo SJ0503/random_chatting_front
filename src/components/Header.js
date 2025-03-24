@@ -35,12 +35,12 @@ function Header() {
               <span className="font-semibold text-gray-800 min-w-[120px] whitespace-nowrap">
                 {user.nickname}님 환영합니다!
               </span>
-              <button
-                onClick={() => handleLogout(navigate)} // ✅ 정보
+              <Link
+                to="/userInfo"
                 className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
               >
                 회원정보
-              </button>
+              </Link>
               <button
                 onClick={() => handleLogout(navigate)} // ✅ 로그아웃
                 className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500"
@@ -50,12 +50,12 @@ function Header() {
             </div>
           ) : (
             <div className="flex items-center space-x-4">
-            <Link
-              to="/login"
-              className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
-            >
-              시작하기
-            </Link>
+              <Link
+                to="/login"
+                className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+              >
+                시작하기
+              </Link>
             </div>
           )}
         </div>
