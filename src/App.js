@@ -13,8 +13,9 @@ import UserInfo from "./pages/UserInfo.js";
 
 function App() {
   return (
-    <AuthProvider> {/* ✅ 전역 상태 관리 적용 */}
-      <Router>
+    <Router>
+      <AuthProvider> {/* ✅ 전역 상태 관리 적용 */}
+
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -27,8 +28,9 @@ function App() {
             <Route path="/kakaoCallback" element={<KakaoCallback />} />
           </Routes>
         </Layout>
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+
+    </Router>
   );
 }
 

@@ -4,6 +4,8 @@ import { logout } from "../utils/userAPI.js"
 // ✅ AuthContext 생성
 const AuthContext = createContext();
 
+
+
 // ✅ AuthProvider: 사용자 정보를 전역적으로 관리
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -23,6 +25,7 @@ export const AuthProvider = ({ children }) => {
 
     // ✅ 로그아웃 함수
     const handleLogout = async () => {
+        
         try {
             await logout(); // ✅ 실제로 함수 실행
         } catch (err) {
