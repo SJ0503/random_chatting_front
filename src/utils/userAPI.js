@@ -69,12 +69,12 @@ export const registerKakaoUser = async (userData) => {
 };
 
 // ✅ 이메일 로그인 요청
-export const loginWithEmail = async (email, password) => {
+export const loginWithEmail = async (user_email, user_password) => {
   try {
     const response = await api.post(`/login`, {
       login_type: "email",
-      email,
-      password,
+      user_email,
+      user_password,
     });
 
     return response.data;

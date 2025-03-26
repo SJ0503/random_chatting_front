@@ -48,8 +48,8 @@ function KaKaoRegister() {
                 <h2 className="text-2xl font-bold my-10 text-center">MyChat 카카오 회원가입</h2>
 
                 <small className="block mb-4 text-sm text-center text-gray-500">
-                        추가정보를 입력해주세요
-                    </small>
+                    추가정보를 입력해주세요
+                </small>
 
                 <form onSubmit={(e) => handleKakaoSubmitForm(e, formData, register, navigate)}>
 
@@ -90,6 +90,9 @@ function KaKaoRegister() {
                             placeholder="나이"
                             value={age}
                             onChange={(e) => setAge(e.target.value)}
+                            min="12"
+                            max="65"
+                            required
                         />
                     </div>
                     <div className="mb-4">

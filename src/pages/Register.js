@@ -49,11 +49,11 @@ function Register() {
         );
     }, [isVerified, password, confirmPassword, nickMessage, age, gender, region]);
 
-        // 닉네임 변경 시 자동으로 가입 버튼 비활성화
-        useEffect(() => {
-            setIsFormValid(false);
-        }, [nickname]);
-    
+    // 닉네임 변경 시 자동으로 가입 버튼 비활성화
+    useEffect(() => {
+        setIsFormValid(false);
+    }, [nickname]);
+
 
     useEffect(() => {
         if (timer > 0) {
@@ -199,7 +199,9 @@ function Register() {
                             id="age"
                             type="number"
                             placeholder="나이"
-                            value={age}
+                            min="12"
+                            max="65"
+                            required
                             onChange={(e) => setAge(e.target.value)}
                         />
                     </div>
@@ -230,8 +232,8 @@ function Register() {
                     <button
                         type="submit"
                         className={`w-full p-3 rounded ${isFormValid && !loading
-                                ? "bg-black text-white hover:bg-gray-800"
-                                : "bg-gray-300 text-gray-700 cursor-not-allowed"
+                            ? "bg-black text-white hover:bg-gray-800"
+                            : "bg-gray-300 text-gray-700 cursor-not-allowed"
                             }`}
                         disabled={!isFormValid || loading}
                     >

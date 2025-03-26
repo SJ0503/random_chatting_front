@@ -9,11 +9,11 @@ export const useEmailLogin = () => {
   const navigate = useNavigate(); // ✅ 페이지 이동
   const { setUser } = useAuth(); // ✅ AuthContext에서 사용자 상태 업데이트
 
-  const handleEmailLogin = async (e, email, password) => {
+  const handleEmailLogin = async (e, user_email, user_password) => {
     e.preventDefault(); // 기본 폼 제출 동작 방지
 
     try {
-      const response = await loginWithEmail(email, password);
+      const response = await loginWithEmail(user_email, user_password);
 
       if (!response || !response.accessToken || !response.user) {
         throw new Error("서버에서 유효한 사용자 데이터를 반환하지 않았습니다.");
