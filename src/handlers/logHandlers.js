@@ -19,7 +19,7 @@ export const useEmailLogin = () => {
         throw new Error("서버에서 유효한 사용자 데이터를 반환하지 않았습니다.");
       }
 
-      console.log("로그인 성공:", response);
+      // console.log("로그인 성공:", response);
 
       // ✅ 사용자 정보 저장 (로컬스토리지 & 전역 상태)
       localStorage.setItem("accessToken", response.accessToken);
@@ -29,8 +29,11 @@ export const useEmailLogin = () => {
       // ✅ 로그인 성공 후 홈 화면으로 이동 (UI 자동 업데이트)
       navigate("/");
     } catch (error) {
-      console.error("로그인 실패:", error.response?.data || error.message);
+     
+
+      // console.error("로그인 실패:", error.response?.data || error.message);
       setError(error.response?.data?.detail || "로그인 중 오류 발생");
+      alert(error.message);
     }
   };
 

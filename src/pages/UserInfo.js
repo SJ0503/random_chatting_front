@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import PasswordFields from "../components/Fields/PasswordField";
+import { useUserUpdate } from "../hooks/useUserUpdate.js";
 
 const cities = [
   "서울", "부산", "대구", "인천", "광주", "대전", "울산", "세종",
@@ -16,6 +17,8 @@ function UserInfo() {
   const [age, setAge] = useState(user?.age || "");
   const [region, setRegion] = useState(user?.region || cities[0]);
 
+  const { handleUpdate } = useUserUpdate();
+
   useEffect(() => {
     if (!user) {
       navigate("/", { replace: true });
@@ -24,12 +27,38 @@ function UserInfo() {
 
   if (!user) return null;
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // 나이 유효성 검사
+    const numericAge = parseInt(age);
+    if (numericAge < 12 || numericAge > 65) {
+      alert("나이는 12세 이상 65세 이하로 입력해주세요.");
+      return;
+    }
+
+    // 비밀번호 일치 여부 검사 (입력했을 때만)
+    if (newPassword && newPassword !== confirmPassword) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    handleUpdate({
+      password: newPassword,
+      age: numericAge,
+      region,
+    });
+
+    setNewPassword("");
+    setConfirmPassword("");
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <div className="w-full max-w-md bg-white p-10 rounded-2xl border-2 border-black shadow">
         <h2 className="text-2xl font-bold mb-10 text-center">{user.nickname}님의 정보</h2>
 
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleSubmit}>
           {/* 회원 유형 */}
           <div className="flex justify-between items-center">
             <label className="text-gray-600 text-lg">회원 유형</label>
@@ -70,7 +99,8 @@ function UserInfo() {
               value={age}
               onChange={(e) => setAge(e.target.value)}
               className="w-1/2 p-2 border border-gray-300 rounded"
-              min="12" max="65"
+              min="12"
+              max="65"
               required
             />
           </div>

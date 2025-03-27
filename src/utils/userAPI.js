@@ -109,3 +109,9 @@ export const logout = async () => {
   document.cookie = "refresh_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 };
 
+// ✅ 정보업데이트 (토큰 삭제)
+export const updateUser = async (updateData) => {
+  const response = await api.patch("/update-user", updateData);
+  return response.data;
+};
+
