@@ -115,3 +115,10 @@ export const updateUser = async (updateData) => {
   return response.data;
 };
 
+// ✅ 회우너탈퇴
+export const deleteUser = async () => {
+  const res = await api.patch("/delete-user");
+  return res.data;
+};
+
+

@@ -18,6 +18,7 @@ function UserInfo() {
   const [region, setRegion] = useState(user?.region || cities[0]);
 
   const { handleUpdate } = useUserUpdate();
+  const {handleDelete} = useUserUpdate();
 
   useEffect(() => {
     if (!user) {
@@ -122,13 +123,23 @@ function UserInfo() {
 
           {/* 저장 버튼 */}
           <div className="text-center pt-4">
-            <button
-              type="submit"
-              className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
-            >
-              수정하기
-            </button>
+            <div className="flex justify-center gap-4">
+              <button
+                type="submit"
+                className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
+              >
+                수정하기
+              </button>
+
+              <button 
+                type="button" onClick={handleDelete}
+                className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-500"
+              >
+                탈퇴하기
+              </button>
+            </div>
           </div>
+
         </form>
       </div>
     </div>

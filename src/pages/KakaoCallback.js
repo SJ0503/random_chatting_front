@@ -1,12 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { loginWithKakao } from "../utils/userAPI"; // ✅ API 분리된 함수 import
+import { loginWithKakao } from "../utils/userAPI";
 
 function KakaoCallback() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
   const hasRun = useRef(false);
+  const [error,setError] = useState(null);
 
   useEffect(() => {
     if (hasRun.current) return;
@@ -17,7 +18,6 @@ function KakaoCallback() {
 
     if (!authCode) return;
 
-    // ✅ 분리된 API 함수 사용
     loginWithKakao(authCode)
       .then((res) => {
         console.log("카카오 로그인 응답 프론트:", res);
@@ -35,10 +35,11 @@ function KakaoCallback() {
         }
       })
       .catch((err) => {
-        console.error("카카오 로그인 실패:", err);
-        hasRun.current = false;
+        // console.error("카카오 로그인 실패:", err.response?.data || err.message);
+        setError(err.response?.data?.detail || "로그인 중 오류 발생");
+        alert("로그인 실패: " + (err.response?.data?.detail || err.message));
       });
-  }, [navigate, setUser]);
+  }, [navigate, setUser,setError, error]);
 
   return null;
 }
