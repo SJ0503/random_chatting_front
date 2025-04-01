@@ -4,7 +4,6 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import FindMyID from "./pages/FindMyID";
 import FindMyPW from "./pages/FindMyPW";
 import KaKaoRegister from "./pages/KakaoRegister";
 import KakaoCallback from "./pages/KakaoCallback";
@@ -23,7 +22,6 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/kakaoRegister" element={<KaKaoRegister />} />
             <Route path="/userInfo" element={<UserInfo />} />
-            <Route path="/findMyID" element={<FindMyID />} />
             <Route path="/findMyPW" element={<FindMyPW />} />
             <Route path="/kakaoCallback" element={<KakaoCallback />} />
           </Routes>
