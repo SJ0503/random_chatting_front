@@ -9,7 +9,7 @@ import KaKaoRegister from "./pages/KakaoRegister";
 import KakaoCallback from "./pages/KakaoCallback";
 import { AuthProvider } from "./context/AuthContext.js"; // ✅ 전역 인증 상태 관리
 import UserInfo from "./pages/UserInfo.js";
-
+import ResetPW from "./pages/ResetPW.js";
 function App() {
   return (
     <Router>
@@ -23,6 +23,7 @@ function App() {
             <Route path="/kakaoRegister" element={<KaKaoRegister />} />
             <Route path="/userInfo" element={<UserInfo />} />
             <Route path="/findMyPW" element={<FindMyPW />} />
+            <Route path="/resetPW"   element={<ResetPW />}/>
             <Route path="/kakaoCallback" element={<KakaoCallback />} />
           </Routes>
         </Layout>

@@ -121,4 +121,30 @@ export const deleteUser = async () => {
   return res.data;
 };
 
+// ✅ 이메일 인증번호 전송
+export const findPW = async (email) => {
+  if (!email) throw new Error("이메일을 입력해주세요.");
+  if (!isValidEmail(email)) throw new Error("유효하지 않은 이메일 형식입니다.");
+
+  try {
+    const response = await api.post(`/send-verification-code-for-findPW`, null, {
+      params: { email },
+    });
+    return response.data.message;
+  } catch (error) {
+    console.error("인증번호 전송 실패:", error.response?.data || error.message);
+    throw new Error(error.response?.data?.detail || "인증 코드 전송에 실패했습니다.");
+  }
+};
+
+export const resetPW = async (email, password) => {
+  const response = await api.patch("/reset-password", {
+    email,
+    new_password: password,
+  });
+  return response.data;
+};
+
+
+
 

@@ -35,6 +35,40 @@ export const handleVerifyCode = async (email, code, verifyCode, setIsCodeDisable
     }
 };
 
+// 인증번호 검증 핸들러 비밀번호 찾기용용
+export const handleVerifyCodeForFindPW = async (
+    email,
+    code,
+    verifyCode,
+    setIsCodeDisabled,
+    setIsVerified,
+    setTimer,
+    setIsEmailDisabled,
+    onSuccess // navigate 함수 대신 콜백 함수로 변경
+) => {
+    try {
+        const message = await verifyCode(email, code);
+        if (message === "인증 성공") {
+            setIsCodeDisabled(true);
+            setIsVerified(true);
+            setTimer(0);
+            setIsEmailDisabled(true);
+            if (typeof onSuccess === "function") {
+                onSuccess(); // 성공 시 콜백 호출
+            }
+            return true;
+        } else {
+            console.warn("Unexpected response message:", message);
+            return false;
+        }
+    } catch (err) {
+        console.error("인증 실패:", err.message);
+        alert(err.message || "인증번호 확인 중 문제가 발생했습니다.");
+        return false;
+    }
+};
+
+
 // 닉네임 중복 확인 핸들러
 export const handleCheckNickname = async (nickname, checkNickname) => {
     try {
