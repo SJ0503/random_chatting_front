@@ -10,7 +10,9 @@ function Header() {
     <header className="bg-white text-black border-b border-black sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* 좌측: 어플리케이션 이름 */}
-        <div className="text-lg font-bold text-black">MyChatApp</div>
+        <Link to="/" className="text-lg font-bold text-black">
+          MyChatApp
+        </Link>
 
         {/* 중앙: 네비게이션 메뉴 */}
         <nav>

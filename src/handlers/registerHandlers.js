@@ -9,7 +9,7 @@ export const handleSendVerificationCode = async (email, setIsEmailDisabled, setT
             setIsEmailDisabled(true); // 이메일 입력 비활성화
             setTimer(300); // 5분 타이머 시작
         } else {
-            console.warn("Unexpected response message:", responseMessage);
+            // console.warn("Unexpected response message:", responseMessage);
         }
     } catch (err) {
         console.error("인증 코드 전송 실패:", err.message);

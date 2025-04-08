@@ -63,8 +63,6 @@ function Login() {
         </form>
 
         <div className="flex justify-center space-x-6 mt-8 text-sm text-gray-400">
-          <Link to="/findMyID">아이디 찾기</Link>
-          <span>|</span>
           <Link to="/findMyPW">비밀번호 찾기</Link>
           <span>|</span>
           <Link to="/register">회원가입</Link>
