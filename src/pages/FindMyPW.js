@@ -32,7 +32,7 @@ function FindMyPW() {
                 <h2 className="text-2xl font-bold my-5 text-center">비밀번호 찾기</h2>
 
                 <small className="block mb-10 text-sm text-center text-gray-500">
-                    모든 조건이 충족되어야 가입버튼이 활성화 됩니다.
+                    가입된 이메일 인증 후 비밀번호 재설정 가능
                 </small>
 
                 <form className="space-y-6">

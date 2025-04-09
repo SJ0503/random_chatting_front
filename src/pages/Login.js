@@ -26,7 +26,7 @@ function Login() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-white">
       <div className="w-full max-w-lg p-8">
-        <h2 className="text-2xl font-bold mb-6 text-center">MyChat 로그인</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Hey Chatly 로그인</h2>
 
         <form onSubmit={handleSubmit}>
           {/* 이메일 입력 */}

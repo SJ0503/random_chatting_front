@@ -10,6 +10,9 @@ import KakaoCallback from "./pages/KakaoCallback";
 import { AuthProvider } from "./context/AuthContext.js"; // ✅ 전역 인증 상태 관리
 import UserInfo from "./pages/UserInfo.js";
 import ResetPW from "./pages/ResetPW.js";
+import RandomChatRoom from "./pages/RandomChatRoom.js";
+import OpenChatRoom from "./pages/OpenChatRoom.js";
+
 function App() {
   return (
     <Router>
@@ -25,6 +28,8 @@ function App() {
             <Route path="/findMyPW" element={<FindMyPW />} />
             <Route path="/resetPW"   element={<ResetPW />}/>
             <Route path="/kakaoCallback" element={<KakaoCallback />} />
+            <Route path="/openChat" element={<OpenChatRoom />} />
+            <Route path="/randomChat" element={<RandomChatRoom />} />
           </Routes>
         </Layout>
       </AuthProvider>
