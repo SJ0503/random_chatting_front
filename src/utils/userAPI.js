@@ -75,6 +75,7 @@ export const loginWithEmail = async (user_email, user_password) => {
       login_type: "email",
       user_email,
       user_password,
+      withCredentials: true
     });
 
     return response.data;
@@ -89,6 +90,8 @@ export const loginWithKakao = async (authCode) => {
   const response = await api.post(`/login`, {
     login_type: "kakao",
     code: authCode,
+    withCredentials: true
+
   });
 
   return response.data;
