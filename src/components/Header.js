@@ -11,7 +11,7 @@ function Header() {
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         {/* 좌측: 어플리케이션 이름 */}
         <Link to="/" className="text-lg font-bold text-black">
-        Hey Chatly
+        Hi Chatty
         </Link>
 
         {/* 중앙: 네비게이션 메뉴 */}
